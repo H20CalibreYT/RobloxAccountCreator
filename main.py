@@ -127,7 +127,7 @@ def save_altmanger_login(account_info):
     with open(TextFile2, 'a') as file:
         file.write(f"{account_info[1]}:{account_info[2]}\n")
 
-for i in range(30):
+for i in range(999999):
     Account = CreateAcc("https://www.roblox.com/")
     if Account != None:
         save_account_info(Account)
