@@ -25,7 +25,7 @@ first_names_response = requests.get(first_names_url)
 status("Getting last names...")
 last_names_response = requests.get(last_names_url)
 
-# Verificar si la carga de nombres fue exitosa
+# Check if name loading was successful
 if first_names_response.status_code == 200 and last_names_response.status_code == 200:
     first_names = list(set(first_names_response.text.splitlines()))
     last_names = list(set(last_names_response.text.splitlines()))
@@ -33,17 +33,17 @@ else:
     status("Name loading failed. Re-Execute the script.")
     sys.exit()
 
-# Rutas de archivos
+# File paths
 files_path = os.path.dirname(os.path.abspath(sys.argv[0]))
 text_files_folder = os.path.join(files_path, "Accounts")
 text_file = os.path.join(text_files_folder, f"Accounts_{date.today()}.txt")
 text_file2 = os.path.join(text_files_folder, f"AltManagerLogin_{date.today()}.txt")
 
-# Crear carpeta si no existe
+# Create folder if it does not exist
 if not os.path.exists(text_files_folder):
     os.makedirs(text_files_folder)
 
-# Listas de días, meses y años
+# Lists of days, months and years
 days = [str(i + 1) for i in range(10, 28)]
 months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 years = [str(i + 1) for i in range(1980, 2004)]
