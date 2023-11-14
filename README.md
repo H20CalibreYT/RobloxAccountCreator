@@ -11,6 +11,7 @@ This Python script automates the creation of Roblox accounts with unique usernam
 - secrets (install with `pip install secrets`)
 - requests (install with `pip install requests`)
 - WebDriver compatible with your chosen browser (in this case, Microsoft Edge WebDriver)
+- Win11 (maybe)
 
 ## Important Note
 
