@@ -7,13 +7,16 @@ from datetime import date
 from selenium import webdriver
 from selenium.webdriver.support.ui import Select
 import requests
+import threading
 
 def status(text):
     os.system('cls' if os.name == 'nt' else 'clear')
     print("\033[1;34m" + text + "\033[0m")
 
 #Config
-Accounts = 999999 #how many accounts
+Accounts = 100 #how many accounts
+MaxWindows = 3
+ActualWindows = 0
 
 # URLs
 first_names_url = "https://raw.githubusercontent.com/H20CalibreYT/RobloxAccountCreator/main/firstnames.txt"
@@ -64,6 +67,7 @@ def gen_user(first_names, last_names):
     return full
 
 def create_account(url, first_names, last_names):
+    global ActualWindows
     try:
         status("Starting to create an account...")
         cookie_found = False
@@ -74,6 +78,7 @@ def create_account(url, first_names, last_names):
         driver = webdriver.Edge()
         driver.set_window_size(1200, 800)
         driver.set_window_position(0, 0)
+        #driver.minimize_window()
         driver.get(url)
         time.sleep(2)
 
@@ -151,12 +156,19 @@ def create_account(url, first_names, last_names):
                     break
         if cookie_found:
             status("Cookie found...")
-            return [cookie.get('value'), username, password]
+            result = [cookie.get('value'), username, password]
+            save_account_info(result)
+            save_altmanager_login(result)
+            if result is not None:
+                status("Successfully created!")
+                time.sleep(3)
+                ActualWindows -= 1
+                status(f"Pestanas abiertas: {ActualWindows}")
+                pass
 
-    except Exception as e:
-        pass
-    finally:
-        pass
+    except:
+        status(f"Pestanas abiertas: {ActualWindows}")
+        ActualWindows -= 1
 
 # Save account information to text file
 def save_account_info(account_info):
@@ -172,9 +184,10 @@ def save_altmanager_login(account_info):
 
 # Create accounts
 for _ in range(Accounts):
-    account = create_account(roblox_url, first_names, last_names)
-    if account is not None:
-        save_account_info(account)
-        save_altmanager_login(account)
-        status("Successfully created!")
-        time.sleep(3)
+    while ActualWindows >= MaxWindows:
+        status(f"Esperando... {ActualWindows}/{MaxWindows}")
+        time.sleep(1)
+    ActualWindows += 1
+    account_thread = threading.Thread(target=create_account, args=(roblox_url, first_names, last_names))
+    account_thread.start()
+    time.sleep(1)
