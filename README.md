@@ -1,5 +1,6 @@
 # Roblox Account Creator
-
+# DEPRCATED
+## THIS WAS CREATED 2 YEARS AGO, IT MAY WORK BAD OR NOT WORK
 This Python script automates the creation of Roblox accounts with unique usernames and secure passwords. The main goal of this project is educational, demonstrating web automation and data manipulation in Python.
 
 ### .exe file in releases
